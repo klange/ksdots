@@ -181,7 +181,13 @@ update_bashrc () {
 			echo "Update cancelled."
 		else
 			mv /tmp/new_bashrc ~/.bashrc
-			echo "Update completed, please restart bash."
+			echo -n "Update completed, restart bash? (Y/n) "
+			read bashrc_update_restart
+			if [ "$bashrc_update_restart" == "n" ] ; then
+				echo "Please restart bash for changes to take effect."
+			else
+				exec bash
+			fi
 		fi
 	fi
 }
