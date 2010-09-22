@@ -164,14 +164,18 @@ unkey_host () {
 update_bashrc () {
 	echo "Updating .bashrc..."
 	wget -O /tmp/new_bashrc -q http://github.com/klange/bashrc/raw/master/.bashrc
-	echo -e "\e[1mChanges in this update:\e[0m"
-	diff ~/.bashrc /tmp/new_bashrc
-	echo -n "Do you wish to continue? (Y/n) "
-	read bashrc_update_continue
-	if [ "$bashrc_update_continue" == "n" ] ; then
-		echo "Update cancelled."
+	if [ "$(cmp /tmp/new_bashrc ~/.bashrc)" == "" ] ; then
+		echo "You are already up to date."
 	else
-		mv /tmp/new_bashrc ~/.bashrc
-		echo "Update completed, please restart bash."
+		echo -e "\e[1mChanges in this update:\e[0m"
+		diff ~/.bashrc /tmp/new_bashrc
+		echo -n "Do you wish to continue? (Y/n) "
+		read bashrc_update_continue
+		if [ "$bashrc_update_continue" == "n" ] ; then
+			echo "Update cancelled."
+		else
+			mv /tmp/new_bashrc ~/.bashrc
+			echo "Update completed, please restart bash."
+		fi
 	fi
 }
