@@ -143,6 +143,8 @@ fi
 
 alias なの="LANG=ja_JP.utf8 nano"
 alias rape='fsck -f'
+alias ll='ls -l'
+alias la='ls -la'
 
 # FUNCTIONS
 
