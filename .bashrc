@@ -1,6 +1,7 @@
 #
 # klange's ~/.bashrc
 # 
+# [2010-09-22] Make linux palette a function
 # [2010-09-21] update_bashrc command
 # [2010-09-21] Initialize git -> github.com/klange/bashrc
 # [2010-09-21] Added Tango framebuffer palette
@@ -46,7 +47,7 @@ if [ "$COLORTERM" == "gnome-terminal" ]; then
 fi
 
 # Tango palette for framebuffers
-if [ "$TERM" == "linux" ]; then
+function color_palette () {
 	echo -en "\e]P02e3436" #black
 	echo -en "\e]P8555753" #darkgray
 	echo -en "\e]P1cc0000" #darkred
@@ -63,6 +64,9 @@ if [ "$TERM" == "linux" ]; then
 	echo -en "\e]PE34e2e2" #cyan
 	echo -en "\e]P7ffffff" #lightgray
 	echo -en "\e]PFeeeeec" #white
+}
+if [ "$TERM" == "linux" ]; then
+	color_palette
 fi
 
 # PROMPT
