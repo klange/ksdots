@@ -3,7 +3,7 @@
 # 
 # [2010-09-21] update_bashrc command
 # [2010-09-21] Initialize git -> github.com/klange/bashrc
-# [2010-09-21] Added Tango framebuffer pallette
+# [2010-09-21] Added Tango framebuffer palette
 #
 
 [ -z "$PS1" ] && return
@@ -45,7 +45,7 @@ if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
 fi
 
-# Tango pallette for framebuffers
+# Tango palette for framebuffers
 if [ "$TERM" == "linux" ]; then
 	echo -en "\e]P02e3436" #black
 	echo -en "\e]P8555753" #darkgray
