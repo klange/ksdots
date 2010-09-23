@@ -111,17 +111,19 @@ function prompt_command {
 	#
 	# Git support
 	if [ $KLANGE_USE_GIT ]; then
-		local GIT_STATUS=`git status 2>/dev/null`
-		if [[ $GIT_STATUS != "" ]] ; then
-			local REFS=$(git symbolic-ref HEAD 2>/dev/null)
-			REFS="${REFS#refs/heads/}"
-			if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+		if [ -e .git ] ; then
+			local GIT_STATUS=`git status 2>/dev/null`
+			if [[ $GIT_STATUS != "" ]] ; then
+				local REFS=$(git symbolic-ref HEAD 2>/dev/null)
+				REFS="${REFS#refs/heads/}"
+				if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
+					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+				fi
+				if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
+					REFS="$REFS$ASCII_RESET ${CYAN_COLOR}not pushed"
+				fi 
+				PROMPT_PREFIX="$PROMPT_PREFIX$USER_COLOR$REFS$ASCII_RESET "
 			fi
-			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}not pushed"
-			fi 
-			PROMPT_PREFIX="$PROMPT_PREFIX$USER_COLOR$REFS$ASCII_RESET "
 		fi
 	fi
     
