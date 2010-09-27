@@ -149,14 +149,11 @@ function prompt_command {
 	# Mercurial
 	if [ $KLANGE_USE_HG ]; then
 		if [ -e .hg ] ; then
-			local HG_STATUS=`hg summary 2>/dev/null`
-			if [[ HG_STATUS != "" ]] ; then
-				local REFS=" $(echo $HG_STATUS | grep 'branch: ' | sed 's/branch: //')"
-				if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
-					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
-				fi
-				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
+			local REFS=" $(hg summary | grep 'branch: ' | sed 's/branch: //')"
+			if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
+				REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 			fi
+			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
 		fi
 	fi
 	# And we're done
