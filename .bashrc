@@ -12,12 +12,14 @@
 # DEFAULTS
 KLANGE_USE_GIT=0
 KLANGE_USE_SVN=0
+KLANGE_USE_HG=0
 
 # HOST OPTIONS
 case `hostname --long` in
 	luka|kaito|miku|rin|len)
 		KLANGE_USE_GIT=1
 		KLANGE_USE_SVN=1
+		KLANGE_USE_HG=1
 		;;
 	*.acm.uiuc.edu|*.acm.illinois.edu)
 		KLANGE_USE_GIT=1
@@ -140,6 +142,20 @@ function prompt_command {
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 				fi
 				PROMPT_PREFIX="$PROMP_PREFIX${HOST_COLOR}svn$USER_COLOR$REFS$ASCII_RESET "
+			fi
+		fi
+	fi
+	#
+	# Mercurial
+	if [ $KLANGE_USE_HG ]; then
+		if [ -e .hg ] ; then
+			local HG_STATUS=`hg summary 2>/dev/null`
+			if [[ HG_STATUS != "" ]] ; then
+				local REFS=" $(hg summary | grep 'branch: ' | sed 's/branch: //')"
+				if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
+					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+				fi
+				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
 			fi
 		fi
 	fi
