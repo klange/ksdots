@@ -122,7 +122,7 @@ function prompt_command {
 				if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${CYAN_COLOR}not pushed"
 				fi 
-				PROMPT_PREFIX="$PROMPT_PREFIX$USER_COLOR$REFS$ASCII_RESET "
+				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git $USER_COLOR$REFS$ASCII_RESET "
 			fi
 		fi
 	fi
