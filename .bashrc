@@ -11,11 +11,13 @@
 
 # DEFAULTS
 KLANGE_USE_GIT=0
+KLANGE_USE_SVN=0
 
 # HOST OPTIONS
 case `hostname --long` in
 	luka|kaito|miku|rin|len)
 		KLANGE_USE_GIT=1
+		KLANGE_USE_SVN=1
 		;;
 	*.acm.uiuc.edu|*.acm.illinois.edu)
 		KLANGE_USE_GIT=1
@@ -24,6 +26,7 @@ case `hostname --long` in
 		;;
 	*.ews.illinois.edu|*.ews.uiuc.edu)
 		KLANGE_USE_GIT=0
+		KLANGE_USE_SVN=1
 		alias cs232=/homesta/classdata/bin/cs232
 		export PATH=/home/engr/lange7/bin:$PATH
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
@@ -126,7 +129,20 @@ function prompt_command {
 			fi
 		fi
 	fi
-    
+	#
+	# SVN support
+	if [ $KLANGE_USE_SVN ]; then
+		if [ -e .svn ] ; then
+			local SVN_STATUS=`svn info 2>/dev/null`
+			if [[ $SVN_STATUS != "" ]] ; then
+				local REFS=""
+				if [[ `svn status | sed 's/ .*//' | grep M` != "" ]] ; then
+					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+				fi
+				PROMPT_PREFIX="$PROMP_PREFIX${HOST_COLOR}svn $USER_COLOR$REFS$ASCII_RESET "
+			fi
+		fi
+	fi
 	# And we're done
 	PS1="$TITLEBAR$ASCII_BOLD[$USER_COLOR\u $HOST_COLOR\h $DATE_COLOR$DATE_STRING $TIME_COLOR$TIME_STRING $PROMPT_PREFIX$ASCII_RESET\w$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
 }
