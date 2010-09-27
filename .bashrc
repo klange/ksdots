@@ -117,7 +117,7 @@ function prompt_command {
 		if [ -e .git ] ; then
 			local GIT_STATUS=`git status 2>/dev/null`
 			if [[ $GIT_STATUS != "" ]] ; then
-				local REFS=$(git symbolic-ref HEAD 2>/dev/null)
+				local REFS=" $(git symbolic-ref HEAD 2>/dev/null)"
 				REFS="${REFS#refs/heads/}"
 				if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
@@ -125,7 +125,7 @@ function prompt_command {
 				if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${CYAN_COLOR}not pushed"
 				fi 
-				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git $USER_COLOR$REFS$ASCII_RESET "
+				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git$USER_COLOR$REFS$ASCII_RESET "
 			fi
 		fi
 	fi
@@ -139,7 +139,7 @@ function prompt_command {
 				if [[ `svn status | sed 's/ .*//' | grep M` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 				fi
-				PROMPT_PREFIX="$PROMP_PREFIX${HOST_COLOR}svn $USER_COLOR$REFS$ASCII_RESET "
+				PROMPT_PREFIX="$PROMP_PREFIX${HOST_COLOR}svn$USER_COLOR$REFS$ASCII_RESET "
 			fi
 		fi
 	fi
