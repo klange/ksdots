@@ -135,7 +135,7 @@ function prompt_command {
 		if [ -e .svn ] ; then
 			local SVN_STATUS=`svn info 2>/dev/null`
 			if [[ $SVN_STATUS != "" ]] ; then
-				local REFS=""
+				local REFS=" $(svn info | grep "Repository Root" | sed 's/.*\///')"
 				if [[ `svn status | sed 's/ .*//' | grep M` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 				fi
