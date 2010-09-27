@@ -151,7 +151,7 @@ function prompt_command {
 		if [ -e .hg ] ; then
 			local HG_STATUS=`hg summary 2>/dev/null`
 			if [[ HG_STATUS != "" ]] ; then
-				local REFS=" $(hg summary | grep 'branch: ' | sed 's/branch: //')"
+				local REFS=" $(echo $HG_STATUS | grep 'branch: ' | sed 's/branch: //')"
 				if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 				fi
