@@ -149,7 +149,7 @@ function prompt_command {
 	# Mercurial
 	if [ $KLANGE_USE_HG ]; then
 		if [ -e .hg ] ; then
-			local REFS=" $(hg summary | grep 'branch: ' | sed 's/branch: //')"
+			local REFS=" $(hg branch 2>/dev/null)"
 			if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
 				REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 			fi
