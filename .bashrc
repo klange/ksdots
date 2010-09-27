@@ -119,7 +119,7 @@ function prompt_command {
 		if [ -e .git ] ; then
 			local GIT_STATUS=`git status 2>/dev/null`
 			if [[ $GIT_STATUS != "" ]] ; then
-				local REFS=" $(git symbolic-ref HEAD 2>/dev/null)"
+				local REFS=" $(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')"
 				REFS="${REFS#refs/heads/}"
 				if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
