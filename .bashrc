@@ -179,6 +179,10 @@ alias rape='fsck -f'
 alias ll='ls -l'
 alias la='ls -la'
 
+# EDITOR
+
+export EDITOR=vim
+
 # FUNCTIONS
 
 generate_password () {
