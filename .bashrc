@@ -24,16 +24,19 @@ case `hostname --long` in
 	*.acm.uiuc.edu|*.acm.illinois.edu)
 		KLANGE_USE_GIT=1
 		alias conkyForecast="python conkyForecast/conkyForecast.py"
-		export PATH=/afs/acm.uiuc.edu/user/lange7/bin:$PATH
 		;;
 	*.ews.illinois.edu|*.ews.uiuc.edu)
 		KLANGE_USE_GIT=0
 		KLANGE_USE_SVN=1
 		alias cs232=/homesta/classdata/bin/cs232
-		export PATH=/home/engr/lange7/bin:$PATH
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
 		;;
 esac
+
+# ~bin DIRECTORY
+if [ -e ~/bin ] ; then
+	export PATH=~/bin:$PATH
+fi
 
 # SPECIAL OPTIONS AND FIXES
 
