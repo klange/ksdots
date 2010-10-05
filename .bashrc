@@ -33,8 +33,8 @@ case `hostname --long` in
 		;;
 esac
 
-# ~bin DIRECTORY
-if [ -e ~/bin ] ; then
+# ~/bin
+if [ -e ~/bin ]; then
 	export PATH=~/bin:$PATH
 fi
 
@@ -52,6 +52,14 @@ fi
 # Fix gnome-terminal color support
 if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
+fi
+
+if [ -e ~/bin/answerback ]; then
+	eval ~/bin/answerback
+	if [ "x$ANSWERBACK" == "xPuTTY" ]; then
+		export TERM="xterm-256color"
+		export COLORTERM="putty-256color"
+	fi
 fi
 
 # Tango palette for framebuffers
