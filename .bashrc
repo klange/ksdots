@@ -52,13 +52,13 @@ fi
 # Fix gnome-terminal color support
 if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
-fi
-
-if [ -e ~/bin/answerback ]; then
-	eval ~/bin/answerback
-	if [ "x$ANSWERBACK" == "xPuTTY" ]; then
-		export TERM="xterm-256color"
-		export COLORTERM="putty-256color"
+else
+	if [ -e ~/bin/answerback ]; then
+		eval ~/bin/answerback
+		if [ "x$ANSWERBACK" == "xPuTTY" ]; then
+			export TERM="xterm-256color"
+			export COLORTERM="putty-256color"
+		fi
 	fi
 fi
 
