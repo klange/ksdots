@@ -54,10 +54,11 @@ if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
 else
 	if [ -e ~/bin/answerback ]; then
-		eval ~/bin/answerback
+		export ANSWERBACK=$(~/bin/answerback)
 		if [ "x$ANSWERBACK" == "xPuTTY" ]; then
 			export TERM="xterm-256color"
 			export COLORTERM="putty-256color"
+			export LANG="C"
 		fi
 	fi
 fi
