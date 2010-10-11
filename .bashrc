@@ -201,7 +201,7 @@ generate_password () {
 }
 
 inform_the_mothership () {
-	fqdn | ssh dakko.us tee `hostname --long` > /dev/null
+	fqdn | ssh dakko.us tee `hostname` > /dev/null
 }
 
 unkey_host () {
