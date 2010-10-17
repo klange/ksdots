@@ -243,3 +243,22 @@ whos_running_firefox () {
 		ssh $i "ps -A aux | grep firefox | grep -v grep"
 	done
 }
+
+pecho () {
+	if [ "$@" == "" ]; then
+		echo 'Usage: pecho [window_number [window_number [...]]]'
+		return 1
+	fi
+	while IFS= read -r -n1 c; do
+		local SCREEN_COUNT=0
+		for screen in $@; do
+			if [ "$c" == "" ]; then
+				screen -fn -X at $screen stuff $'\012'
+			else
+				screen -fn -X at $screen stuff $"$c"
+			fi
+			SCREEN_COUNT=$SCREEN_COUNT+1
+		done
+	done
+}
+
