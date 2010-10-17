@@ -86,6 +86,11 @@ if [ "$TERM" == "linux" ]; then
 	color_palette
 fi
 
+if [ "$TERM" == "screen-bce" ]; then
+	# I use screen under 256-color-supportive things
+	# far more often than not, so give me 256-colors
+	export TERM=screen-256color
+fi
 # PROMPT
 
 function prompt_command {
