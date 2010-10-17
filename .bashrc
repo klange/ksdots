@@ -13,6 +13,7 @@
 KLANGE_USE_GIT=0
 KLANGE_USE_SVN=0
 KLANGE_USE_HG=0
+COLOR_SCREEN=1
 
 # HOST OPTIONS
 case `hostname --long` in
@@ -30,6 +31,7 @@ case `hostname --long` in
 		KLANGE_USE_SVN=1
 		alias cs232=/homesta/classdata/bin/cs232
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
+		COLOR_SCREEN=0
 		;;
 esac
 
@@ -86,10 +88,12 @@ if [ "$TERM" == "linux" ]; then
 	color_palette
 fi
 
-if [ "$TERM" == "screen-bce" ]; then
-	# I use screen under 256-color-supportive things
-	# far more often than not, so give me 256-colors
-	export TERM=screen-256color
+if [ $COLOR_SCREEN ]; then
+	if [ "$TERM" == "screen-bce" ]; then
+		# I use screen under 256-color-supportive things
+		# far more often than not, so give me 256-colors
+		export TERM=screen-256color
+	fi
 fi
 # PROMPT
 
