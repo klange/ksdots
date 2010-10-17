@@ -14,8 +14,14 @@ KLANGE_USE_GIT=0
 KLANGE_USE_SVN=0
 KLANGE_USE_HG=0
 
+if [ "$(uname)" == "Darwin" ] ; then
+	HOSTNAME=`hostname`	
+else
+	HOSTNAME=`hostname --long`
+fi
+
 # HOST OPTIONS
-case `hostname --long` in
+case $HOSTNAME in
 	luka|kaito|miku|rin|len)
 		KLANGE_USE_GIT=1
 		KLANGE_USE_SVN=1
