@@ -116,6 +116,10 @@ function prompt_command {
 	if [[ $RETURN_CODE != 0 ]] ; then
 		PROMPT_PREFIX="$DATE_COLOR$RETURN_CODE$ASCII_RESET " # do nothing
 	fi
+	# Screen window number
+	if [ "$WINDOW" != "" ] ; then
+		PROMPT_PREFIX="$PROMPT_PREFIX$PINK_COLOR%$WINDOW "
+	fi
 	# Title bar
 	local TITLEBAR=""
 	case $TERM in
@@ -156,7 +160,7 @@ function prompt_command {
 				if [[ `svn status | sed 's/ .*//' | grep M` != "" ]] ; then
 					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
 				fi
-				PROMPT_PREFIX="$PROMP_PREFIX${HOST_COLOR}svn$USER_COLOR$REFS$ASCII_RESET "
+				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}svn$USER_COLOR$REFS$ASCII_RESET "
 			fi
 		fi
 	fi
