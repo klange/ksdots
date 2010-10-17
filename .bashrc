@@ -236,3 +236,10 @@ update_bashrc () {
 		fi
 	fi
 }
+
+whos_running_firefox () {
+	for i in thecheat zaphod ng yt hiro; do
+		echo -e "\e[1m$i\e[0m"
+		ssh $i "ps -A aux | grep firefox | grep -v grep"
+	done
+}
