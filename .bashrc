@@ -32,6 +32,9 @@ case `hostname --long` in
 		alias cs232=/homesta/classdata/bin/cs232
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
 		COLOR_SCREEN=0
+		if [ $TERM == "screen-256color" ]; then
+			export TERM=xterm-256color # this is a valid replacement on EWS
+		fi
 		;;
 esac
 
