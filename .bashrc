@@ -267,13 +267,6 @@ pecho () {
 				screen -X -p $screen stuff $"$c"
 			fi
 		done
-		if [ "$c" == "" ]; then
-			echo -n " "
-		elif [ "$c" == "" ]; then
-			echo ""
-		else
-			echo -n -e $"$c"
-		fi
 	done
 }
 
