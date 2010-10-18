@@ -150,10 +150,10 @@ function prompt_command {
 			local REFS=" $(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')"
 			REFS="${REFS#refs/heads/}"
 			if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified
 			fi
 			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}not pushed"
+				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}s" # Staged
 			fi 
 			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git$USER_COLOR$REFS$ASCII_RESET "
 		fi
@@ -166,7 +166,7 @@ function prompt_command {
 			if [[ $SVN_STATUS != "" ]] ; then
 				local REFS=" $(svn info | grep "Repository Root" | sed 's/.*\///')"
 				if [[ `svn status | sed 's/ .*//' | grep M` != "" ]] ; then
-					REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+					REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified
 				fi
 				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}svn$USER_COLOR$REFS$ASCII_RESET "
 			fi
@@ -178,7 +178,7 @@ function prompt_command {
 		if [ -e .hg ] ; then
 			local REFS=" $(hg branch 2>/dev/null)"
 			if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${PINK_COLOR}modified"
+				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # modified
 			fi
 			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
 		fi
