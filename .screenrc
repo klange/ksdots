@@ -1,4 +1,27 @@
+# Important key configurations
+
+attrcolor b ".I"
+defbce on
+defutf8 on
+startup_message off
+
+defscrollback 10000
+
+vbell off
+
+activity "Activity in window %n (%t)"
+bell_msg "Bell in window %n (%t)"
+
+# show screen version for a second
+msgwait 1
+version
+# standard message delay is 2 seconds
+msgwait 2
+
+# Use alternate screen
+altscreen on
+
+# Status Lines
 hardstatus alwayslastline
 hardstatus string "%{= Ky}%-Lw%{=r}%20>%n %t%{= Ky}%+Lw %{= Ky}"
-
 caption string '%?%F%{=b KW} ***%:%{.Kw}    %? %t'
