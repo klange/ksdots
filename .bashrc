@@ -46,6 +46,8 @@ fi
 
 # SPECIAL OPTIONS AND FIXES
 
+set -o vi # Vi mode
+
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTCONTROL=ignoreboth
 shopt -s histappend
