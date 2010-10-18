@@ -31,5 +31,5 @@ altscreen on
 
 # Status Lines
 hardstatus alwayslastline
-hardstatus string "%{= KY} %{= KY}%-Lw%{=b YK}%20>%n %t%{= KY}%+Lw %{= KY} %2` %3`   "
+hardstatus string "%{= KY} %{= KY}%-Lw%{=b YK}%20>%n %t%{= KY}%+Lw %{= KY}%=%{=b KR}%2` %{=b KB}%3`%{=b KW} "
 caption string '%?%F%{=b KW} ***%:%{.Kw}    %? %t'
