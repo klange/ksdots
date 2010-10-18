@@ -117,14 +117,17 @@ function prompt_command {
 	local TIME_STRING="\$(date +%H:%M:%S)"
 	local CYAN_COLOR="\[\e[1;36m\]"
 	local PINK_COLOR="\[\e[1;35m\]"
-	#
-	local PROMPT_PREFIX="$PROMPT_COLOR"
-	if [[ $RETURN_CODE != 0 ]] ; then
-		PROMPT_PREFIX="$DATE_COLOR$RETURN_CODE$ASCII_RESET " # do nothing
-	fi
+	# user and host
+	local PROMPT_PREFIX="$USER_COLOR\u $HOST_COLOR\h "
 	# Screen window number
 	if [ "$WINDOW" != "" ] ; then
 		PROMPT_PREFIX="$PROMPT_PREFIX$PINK_COLOR%$WINDOW "
+	else
+		PROMPT_PREFIX="$PROMPT_PREFIX$DATE_COLOR$DATE_STRING $TIME_COLOR$TIME_STRING "
+	fi
+	# Return code
+	if [[ $RETURN_CODE != 0 ]] ; then
+		PROMPT_PREFIX="$PROMPT_PREFIX$DATE_COLOR$RETURN_CODE$ASCII_RESET " # do nothing
 	fi
 	# Title bar
 	local TITLEBAR=""
@@ -140,7 +143,6 @@ function prompt_command {
 			TITLEBAR="\[\ek\u@\h:\w\e\134\]"
 		;;
 	esac
-	#
 	# Git support
 	if [ $KLANGE_USE_GIT ]; then
 		local GIT_STATUS=`git status 2>/dev/null`
@@ -182,7 +184,7 @@ function prompt_command {
 		fi
 	fi
 	# And we're done
-	PS1="$TITLEBAR$ASCII_BOLD[$USER_COLOR\u $HOST_COLOR\h $DATE_COLOR$DATE_STRING $TIME_COLOR$TIME_STRING $PROMPT_PREFIX$ASCII_RESET\w$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
+	PS1="$TITLEBAR$ASCII_BOLD[$PROMPT_PREFIX$ASCII_RESET\w$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
 }
 export PROMPT_COMMAND=prompt_command
 
