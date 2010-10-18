@@ -123,6 +123,11 @@ function prompt_command {
 	local PROMPT_PREFIX=""
 	local USER_HOST="$USER_COLOR\u $HOST_COLOR\h"
 	PROMPT_PREFIX="$PROMPT_PREFIX$USER_HOST "
+	# Paths
+	local CURRENT_PATH="\w"
+	if [ -e ~/bin/shorten_pwd ] ; then
+		CURRENT_PATH=`~/bin/shorten_pwd`
+	fi
 	# Screen window number
 	if [ "$WINDOW" != "" ] ; then
 		PROMPT_PREFIX="$PROMPT_PREFIX$PINK_COLOR%$WINDOW "
@@ -139,13 +144,13 @@ function prompt_command {
 	case $TERM in
 		xterm*|*rxvt*|cygwin|interix|Eterm|mlterm|kterm|aterm|putty*)
 			if [ "${STY}" ] ; then
-				 TITLEBAR="\[\ek\u@\h:\w\e\134\]"
+				 TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
 			else
-				TITLEBAR="\[\e]1;\u@\h:\w\007\e]2;\u@\h:\w\007\]"
+				TITLEBAR="\[\e]1;\u@\h:$CURRENT_PATH\007\e]2;\u@\h:$CURRENT_PATH\007\]"
 			fi
 		;;
 		screen*)
-			TITLEBAR="\[\ek\u@\h:\w\e\134\]"
+			TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
 		;;
 	esac
 	# Git support
@@ -189,11 +194,6 @@ function prompt_command {
 			fi
 			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
 		fi
-	fi
-	# Paths
-	local CURRENT_PATH="\w"
-	if [ -e ~/bin/shorten_pwd ] ; then
-		CURRENT_PATH=`~/bin/shorten_pwd`
 	fi
 	local FINAL_PATH="$ASCII_RESET$CURRENT_PATH"
 	PROMPT_PREFIX="$PROMPT_PREFIX$FINAL_PATH"
