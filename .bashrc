@@ -151,6 +151,8 @@ function prompt_command {
 			REFS="${REFS#refs/heads/}"
 			if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
 				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified
+			elif [[ `echo $GIT_STATUS | grep "renamed:"` != "" ]] ; then
+				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified as well
 			fi
 			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
 				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}s" # Staged
