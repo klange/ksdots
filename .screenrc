@@ -12,9 +12,13 @@ vbell off
 activity "Activity in window %n (%t)"
 bell_msg "Bell in window %n (%t)"
 
+backtick 1 5 5 uptime
+backtick 2 10 10 date +%m/%d
+backtick 3 1 1 date +%H:%M:%S
+
 # show screen version for a second
-msgwait 1
-version
+#msgwait 1
+#version
 # standard message delay is 2 seconds
 msgwait 2
 
@@ -23,5 +27,5 @@ altscreen on
 
 # Status Lines
 hardstatus alwayslastline
-hardstatus string "%{= Ky}%-Lw%{=r}%20>%n %t%{= Ky}%+Lw %{= Ky}"
+hardstatus string "%{=b KY} %{=b KY}%-Lw%{=r}%20>%n %t%{= KY}%+Lw %{= KY} %2` %3`"
 caption string '%?%F%{=b KW} ***%:%{.Kw}    %? %t'
