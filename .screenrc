@@ -1,0 +1,4 @@
+hardstatus alwayslastline
+hardstatus string "%{= Ky}%-Lw%{=r}%20>%n %t%{= Ky}%+Lw %{= Ky}"
+
+caption string '%?%F%{=b KW} ***%:%{.Kw}    %? %t'
