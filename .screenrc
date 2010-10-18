@@ -16,9 +16,13 @@ backtick 1 5 5 uptime
 backtick 2 10 10 date +%m/%d
 backtick 3 1 1 date +%H:%M:%S
 
-# show screen version for a second
-#msgwait 1
-#version
+# Ctrl-Tab -> Next pane
+bindkey "^[[27;5;9~" focus
+
+# Ctrl-Shift-Tab -> Next window within this tab
+bindkey "^[[27;6;9~" next
+
+
 # standard message delay is 2 seconds
 msgwait 2
 
@@ -27,5 +31,5 @@ altscreen on
 
 # Status Lines
 hardstatus alwayslastline
-hardstatus string "%{=b KY} %{=b KY}%-Lw%{=r}%20>%n %t%{= KY}%+Lw %{= KY} %2` %3`"
+hardstatus string "%{= KY} %{= KY}%-Lw%{=b YK}%20>%n %t%{= KY}%+Lw %{= KY} %2` %3`   "
 caption string '%?%F%{=b KW} ***%:%{.Kw}    %? %t'
