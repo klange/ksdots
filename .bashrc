@@ -227,31 +227,6 @@ unkey_host () {
 	sed -i -e "/$1/d" $HOME/.ssh/known_hosts
 }
 
-update_bashrc () {
-	echo "Updating .bashrc..."
-	wget -O /tmp/new_bashrc -q http://github.com/klange/bashrc/raw/master/.bashrc
-	if [ "$(cmp /tmp/new_bashrc ~/.bashrc)" == "" ] ; then
-		echo "You are already up to date."
-	else
-		echo -e "\e[1mChanges in this update:\e[0m"
-		diff ~/.bashrc /tmp/new_bashrc
-		echo -n "Do you wish to continue? (Y/n) "
-		read bashrc_update_continue
-		if [ "$bashrc_update_continue" == "n" ] ; then
-			echo "Update cancelled."
-		else
-			mv /tmp/new_bashrc ~/.bashrc
-			echo -n "Update completed, restart bash? (Y/n) "
-			read bashrc_update_restart
-			if [ "$bashrc_update_restart" == "n" ] ; then
-				echo "Please restart bash for changes to take effect."
-			else
-				exec bash
-			fi
-		fi
-	fi
-}
-
 whos_running_firefox () {
 	for i in thecheat zaphod ng yt hiro; do
 		echo -e "\e[1m$i\e[0m"
