@@ -185,8 +185,13 @@ function prompt_command {
 			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
 		fi
 	fi
+	# Paths
+	local PATH="\w"
+	if [ -e ~/bin/shorten_pwd ] ; then
+		PATH=`~/bin/shorten_pwd`
+	fi
 	# And we're done
-	PS1="$TITLEBAR$ASCII_BOLD[$PROMPT_PREFIX$ASCII_RESET\w$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
+	PS1="$TITLEBAR$ASCII_BOLD[$PROMPT_PREFIX$ASCII_RESET$PATH$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
 }
 export PROMPT_COMMAND=prompt_command
 

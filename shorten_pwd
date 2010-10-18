@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 path = os.getcwdu()
+path = path.replace(os.environ["HOME"],"~")
 dirs = path.split("/");
 for i in range(len(dirs) - 1):
     dirs[i] = dirs[i][:1]
