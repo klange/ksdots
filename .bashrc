@@ -156,7 +156,7 @@ function prompt_command {
 	esac
 	# Git support
 	if [ $KLANGE_USE_GIT ]; then
-		local GIT_STATUS=`git status 2>/dev/null`
+		local GIT_STATUS="$(git status 2>/dev/null)"
 		if [[ $GIT_STATUS != "" ]] ; then
 			local REFS=" $(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')"
 			REFS="${REFS#refs/heads/}"
