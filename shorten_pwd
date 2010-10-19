@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-import os
+import os, sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 path = os.getcwdu()
 path = path.replace(os.environ["HOME"],"~")
 dirs = path.split("/");
