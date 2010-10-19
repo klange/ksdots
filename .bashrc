@@ -15,7 +15,7 @@ KLANGE_USE_SVN=0
 KLANGE_USE_HG=0
 
 if [ "$(uname)" == "Darwin" ] ; then
-	HOSTNAME=`hostname`	
+	HOSTNAME=`hostname`
 else
 	HOSTNAME=`hostname --long`
 fi
@@ -61,7 +61,8 @@ fi
 # Fix gnome-terminal color support
 if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
-else
+elif [ "$TERM" == "xterm" ]; then
+	# If shell reports just 'xterm', it may be PuTTY
 	if [ -e ~/bin/answerback ]; then
 		export ANSWERBACK=$(~/bin/answerback)
 		if [ "x$ANSWERBACK" == "xPuTTY" ]; then
