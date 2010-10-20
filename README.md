@@ -1,7 +1,7 @@
-klangesdots
-===========
+ksdots
+======
 
-*klangesdots are based on davesdots*
+*ksdots is based on davesdots*
 
 This is a set of configuration files used by Kevin Lange. Many of these
 are meant to be used on top of davesdots, replacing where necessary.
