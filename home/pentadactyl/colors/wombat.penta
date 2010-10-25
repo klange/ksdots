@@ -1,0 +1,37 @@
+" ==Vimperator_Color_Scheme== "
+" name: Wombat "
+" ==Wombat_Color_Scheme== "
+hi clear
+hi Hint			font-family: monospace; font-size: 10pt; font-weight: normal; color: lightyellow; background-color: black; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 5px;
+
+hi HintElem		background-color: #f6f3e8;  color: #444444;
+hi HintActive		background-color: #646464;  color: white;
+
+hi StatusLine		color: black;	background-image: url('http://dakko.us/~k/vimp.png') !important; background-position: 0% 100%;	font-weight: normal; font-size: 10pt;
+
+hi Normal 		color: LightYellow;	background: #333;	font-size: 10pt;
+hi InfoMsg		color: LightYellow;	background: #333;	font-size: 10pt;
+hi ModeMsg		color: LightYellow;	background: #333;	font-size: 10pt;
+hi MoreMsg		color: LimeGreen;	background: #333;
+hi LineNr		color: White;	background: #333;	font-size: 10pt;
+hi Question		color: Yellow;		background: #333;	font-size: 10pt;
+hi WarningMsg		color: White;	background: #333;	font-size: 10pt;
+hi Null			color: CornflowerBlue;
+hi Tag			color: CornflowerBlue;
+
+hi CompTitle		color: #8ac6f2;		background: #242424;	font-weight: bold;
+hi CompItem[selected]	color: #cae682;	background: #242424;
+
+hi CompDesc		color: #f6f3e8;
+
+hi Title		color: white;
+hi Indicator	color: DodgerBlue;
+hi String		color: Orchid;
+hi Number		color: Orchid;
+hi Object		color: Khaki;
+hi Function		color: SkyBlue;
+hi URL			color: LightGreen; text-decoration: underline;
+
+
+hi TabNumber		color: black; font-weight: bold; font-size: 20pt;
+
