@@ -30,6 +30,7 @@ case $HOSTNAME in
 	*.acm.uiuc.edu|*.acm.illinois.edu)
 		KLANGE_USE_GIT=1
 		alias conkyForecast="python conkyForecast/conkyForecast.py"
+		export PATH=/afs/acm.uiuc.edu/admin/scripts:$PATH
 		;;
 	*.ews.illinois.edu|*.ews.uiuc.edu)
 		KLANGE_USE_GIT=0
@@ -243,13 +244,6 @@ unkey_host () {
 		return 1
 	fi
 	sed -i -e "/$1/d" $HOME/.ssh/known_hosts
-}
-
-whos_running_firefox () {
-	for i in thecheat zaphod ng yt hiro; do
-		echo -e "\e[1m$i\e[0m"
-		ssh $i "ps -A aux | grep firefox | grep -v grep"
-	done
 }
 
 pecho () {
