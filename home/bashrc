@@ -74,6 +74,12 @@ elif [ "$TERM" == "xterm" ]; then
 	fi
 fi
 
+if [ "$TERMINAL_OVERRIDE" != "" ]; then
+	# Some things just refuse to accept their own
+	# configuration options for these things.
+	export TERM=$TERMINAL_OVERRIDE
+fi
+
 # Tango palette for framebuffers
 function color_palette () {
 	echo -en "\e]P02e3436" #black
