@@ -17,7 +17,7 @@ echo -e "\e[1;32mInstalling scripts...\e[0m"
 cd ~/bin
 for i in $current_path/scripts/*; do
 	echo -n "Installing $i -> "
-	j=`echo $i | sed "s/.*home\//\./"`
+	j=`echo $i | sed "s/.*scripts\///"`
 	echo "~/bin/$j"
 	rm -r $j
 	echo "ln -f -s $i $j"
