@@ -1,10 +1,5 @@
 #
 # klange's ~/.bashrc
-# 
-# [2010-09-22] Make linux palette a function
-# [2010-09-21] update_bashrc command
-# [2010-09-21] Initialize git -> github.com/klange/bashrc
-# [2010-09-21] Added Tango framebuffer palette
 #
 
 [ -z "$PS1" ] && return
@@ -39,6 +34,8 @@ case $HOSTNAME in
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
 		;;
 esac
+
+KLANGE_EXPAND_GIT=false
 
 # ~/bin
 if [ -e ~/bin ]; then
@@ -176,6 +173,10 @@ function prompt_command {
 			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
 				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}s" # Staged
 			fi 
+			if [ KLANGE_EXPAND_GIT ] ; then
+				local COMMIT=`git show | head -1 | sed 's/commit //'`
+				REFS="$REFS$ASCII_RESET ${TIME_COLOR}$COMMIT"
+			fi
 			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git$USER_COLOR$REFS$ASCII_RESET "
 		fi
 	fi
