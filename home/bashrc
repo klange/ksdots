@@ -185,6 +185,12 @@ function prompt_command {
 			if [ $KLANGE_EXPAND_GIT == true ]; then
 				local COMMIT=`git show | head -1 | sed 's/commit //'`
 				REFS="$REFS $TIME_COLOR[$ASCII_RESET$COMMIT$TIME_COLOR]"
+				if [[ `echo $GIT_STATUS | grep "Untracked"` != "" ]] ; then
+					REFS="$REFS$DATE_COLOR untracked files"
+				fi
+				if [[ `echo $GIT_STATUS | grep "new file"` != "" ]] ; then
+					REFS="$REFS$HOST_COLOR new files"
+				fi
 			fi
 			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git$USER_COLOR$REFS$ASCII_RESET "
 		fi
