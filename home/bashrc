@@ -173,7 +173,7 @@ function prompt_command {
 			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
 				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}s" # Staged
 			fi 
-			if [ KLANGE_EXPAND_GIT ] ; then
+			if [ $KLANGE_EXPAND_GIT ] ; then
 				local COMMIT=`git show | head -1 | sed 's/commit //'`
 				REFS="$REFS$ASCII_RESET ${TIME_COLOR}$COMMIT"
 			fi
