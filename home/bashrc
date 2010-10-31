@@ -5,9 +5,9 @@
 [ -z "$PS1" ] && return
 
 # DEFAULTS
-KLANGE_USE_GIT=0
-KLANGE_USE_SVN=0
-KLANGE_USE_HG=0
+KLANGE_USE_GIT=false
+KLANGE_USE_SVN=false
+KLANGE_USE_HG=false
 
 if [ "$(uname)" == "Darwin" ] ; then
 	HOSTNAME=`hostname`
@@ -18,18 +18,18 @@ fi
 # HOST OPTIONS
 case $HOSTNAME in
 	luka|kaito|miku|rin|len)
-		KLANGE_USE_GIT=1
-		KLANGE_USE_SVN=1
-		KLANGE_USE_HG=1
+		KLANGE_USE_GIT=true
+		KLANGE_USE_SVN=true
+		KLANGE_USE_HG=true
 		;;
 	*.acm.uiuc.edu|*.acm.illinois.edu)
-		KLANGE_USE_GIT=1
+		KLANGE_USE_GIT=true
 		alias conkyForecast="python conkyForecast/conkyForecast.py"
 		export PATH=/afs/acm.uiuc.edu/admin/scripts:$PATH
 		;;
 	*.ews.illinois.edu|*.ews.uiuc.edu)
-		KLANGE_USE_GIT=0
-		KLANGE_USE_SVN=1
+		KLANGE_USE_GIT=false
+		KLANGE_USE_SVN=true
 		alias cs232=/homesta/classdata/bin/cs232
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
 		;;
@@ -160,7 +160,7 @@ function prompt_command {
 		;;
 	esac
 	# Git support
-	if [ $KLANGE_USE_GIT ]; then
+	if [ $KLANGE_USE_GIT == true ]; then
 		local GIT_STATUS="$(git status 2>/dev/null)"
 		if [[ $GIT_STATUS != "" ]] ; then
 			local REFS=" $(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')"
@@ -173,7 +173,7 @@ function prompt_command {
 			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
 				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}s" # Staged
 			fi 
-			if [ $KLANGE_EXPAND_GIT ] ; then
+			if [ $KLANGE_EXPAND_GIT == true ]; then
 				local COMMIT=`git show | head -1 | sed 's/commit //'`
 				REFS="$REFS$ASCII_RESET ${TIME_COLOR}$COMMIT"
 			fi
@@ -182,7 +182,7 @@ function prompt_command {
 	fi
 	#
 	# SVN support
-	if [ $KLANGE_USE_SVN ]; then
+	if [ $KLANGE_USE_SVN == true ]; then
 		if [ -e .svn ] ; then
 			local SVN_STATUS=`svn info 2>/dev/null`
 			if [[ $SVN_STATUS != "" ]] ; then
@@ -196,7 +196,7 @@ function prompt_command {
 	fi
 	#
 	# Mercurial
-	if [ $KLANGE_USE_HG ]; then
+	if [ $KLANGE_USE_HG == true ]; then
 		if [ -e .hg ] ; then
 			local REFS=" $(hg branch 2>/dev/null)"
 			if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
