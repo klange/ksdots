@@ -44,9 +44,6 @@ fi
 
 # SPECIAL OPTIONS AND FIXES
 
-set -o vi # Vi mode
-bind '"\C-l": clear-screen' # Rebind ^L to clear
-
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTCONTROL=ignoreboth
 shopt -s histappend
