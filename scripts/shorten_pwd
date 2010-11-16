@@ -6,6 +6,8 @@ path = os.getcwdu()
 path = path.replace(os.environ["HOME"],"~")
 dirs = path.split("/");
 for i in range(len(dirs) - 1):
+    if not dirs[i]:
+        continue
     if dirs[i][0] == '.':
         dirs[i] = dirs[i][:2]
     else:
