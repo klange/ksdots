@@ -254,17 +254,6 @@ generate_password () {
 	cat /dev/urandom| tr -dc 'a-zA-Z0-9' | fold -w $1 | head -n 1
 }
 
-inform_the_mothership () {
-	fqdn | ssh dakko.us tee `hostname` > /dev/null
-}
-
-unkey_host () {
-	if [ $# -ne 1 ] ; then
-		return 1
-	fi
-	sed -i -e "/$1/d" $HOME/.ssh/known_hosts
-}
-
 pecho () {
 	if [ "$1" == "" ]; then
 		echo 'Usage: pecho [window_number [window_number [...]]]'
