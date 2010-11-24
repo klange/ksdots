@@ -14,6 +14,9 @@ for i in  $current_path/home/*; do
 done
 
 echo -e "\e[1;32mInstalling scripts...\e[0m"
+if [ ! -e ~/bin ] ; then
+	mkdir ~/bin
+fi
 cd ~/bin
 for i in $current_path/scripts/*; do
 	echo -n "Installing $i -> "
