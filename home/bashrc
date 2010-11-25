@@ -287,3 +287,12 @@ tc_caffeinate () {
 }
 complete -F tc_caffeinate -o dirnames caffeinate
 
+tc_generate_password () {
+	local curw
+	COMPREPLY=()
+	curw=${COMP_WORSD[COMP_CWORD]}
+	COMPREPLY=($(compgen -W '8 10 12 15' -- $curw))
+	return 0
+}
+complete -F tc_generate_password generate_password
+complete -F tc_generate_password generate_password_rich
