@@ -275,3 +275,15 @@ pecho () {
 	done
 }
 
+# CUSTOM TAB COMPLETIONS
+
+# Caffeine `caffeinate` Script -> netids (usernames)
+tc_caffeinate () {
+	local curw
+	COMPREPLY=()
+	curw=${COMP_WORDS[COMP_CWORD]}
+	COMPREPLY=($(compgen -A user -- $curw))
+	return 0
+}
+complete -F tc_caffeinate -o dirnames caffeinate
+
