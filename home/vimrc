@@ -84,6 +84,17 @@ if has('eval')
       catch
       endtry
    endfun
+
+   fun! ToggleFoldColumn()
+      if &foldcolumn == 1
+         set foldcolumn=3
+      elseif &foldcolumn == 3
+         set foldcolumn=0
+      else
+         set foldcolumn=1
+      endif
+   endfun
+   nnoremap <F3> :call ToggleFoldColumn()<CR>
 endif
 
 if has('autocmd')
@@ -395,4 +406,3 @@ set t_RV=
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
-
