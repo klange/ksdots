@@ -265,7 +265,6 @@ pecho () {
 	fi
 	echo -e "\e[1m[echoing in parallel on screens $@]\e[0m"
 	stty -echo
-	trap "stty echo" SIGINT SIGTERM
 	while IFS= read -r -s -n1 c; do
 		for screen in $@; do
 			if [ "$c" == "" ]; then
