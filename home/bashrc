@@ -32,6 +32,7 @@ case $HOSTNAME in
 		KLANGE_USE_SVN=true
 		alias cs232=/homesta/classdata/bin/cs232
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
+		alias vim=vimx
 		;;
 	*.cs.illinois.edu|*.cs.uiuc.edu)
 		KLANGE_USE_GIT=true
@@ -273,6 +274,7 @@ pecho () {
 		return 1
 	fi
 	echo -e "\e[1m[echoing in parallel on screens $@]\e[0m"
+	stty -echo
 	while IFS= read -r -s -n1 c; do
 		for screen in $@; do
 			if [ "$c" == "" ]; then
