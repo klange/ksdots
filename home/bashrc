@@ -33,6 +33,15 @@ case $HOSTNAME in
 		alias cs232=/homesta/classdata/bin/cs232
 		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
 		;;
+	*.cs.illinois.edu|*.cs.uiuc.edu)
+		KLANGE_USE_GIT=true
+		KLANGE_USE_SVN=false
+		if [[ "x$HOME" == "x/home/$USER" ]] ; then
+			if [ -e /expand/home ] ; then
+				export HOME=/expand/home/$USER
+			fi
+		fi
+		;;
 esac
 
 KLANGE_EXPAND_GIT=false
