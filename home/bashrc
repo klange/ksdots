@@ -17,7 +17,7 @@ fi
 
 # HOST OPTIONS
 case $HOSTNAME in
-	luka|kaito|miku|rin|len)
+	luka|kaito|miku|rin|len|piko)
 		KLANGE_USE_GIT=true
 		KLANGE_USE_SVN=true
 		KLANGE_USE_HG=true
