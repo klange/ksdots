@@ -162,7 +162,7 @@ if has('eval')
    elseif &t_Co == 88
       call LoadColorScheme("wombat:zellner")
    else
-      call LoadColorScheme("darkblue:zellner")
+      call LoadColorScheme("wombat:darkblue:zellner")
    endif
 endif
 
