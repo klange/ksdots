@@ -9,7 +9,7 @@ KLANGE_USE_GIT=false
 KLANGE_USE_SVN=false
 KLANGE_USE_HG=false
 
-if [ "$(uname)" == "Darwin" ] ; then
+if [[ "$(uname)" == "Darwin" || "$(uname)" == *CYGWIN* ]] ; then
 	HOSTNAME=`hostname`
 else
 	HOSTNAME=`hostname --long`
@@ -21,6 +21,11 @@ case $HOSTNAME in
 		KLANGE_USE_GIT=true
 		KLANGE_USE_SVN=true
 		KLANGE_USE_HG=true
+		if [[ "$(uname)" == *CYGWIN* ]] ; then
+			KLANGE_USE_GIT=false
+			KLANGE_USE_SVN=false
+			KLANGE_USE_HG=false
+		fi
 		;;
 	*.acm.uiuc.edu|*.acm.illinois.edu)
 		KLANGE_USE_GIT=true
