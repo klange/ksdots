@@ -258,6 +258,8 @@ alias la='ls -la'
 
 export EDITOR=vim
 
+gvim(){ setsid /usr/bin/gvim -f "$@"; }
+
 # FUNCTIONS
 
 generate_password () {
@@ -284,6 +286,10 @@ pecho () {
 			fi
 		done
 	done
+}
+
+toaru-fix-path() {
+	export PATH="/home/klange/osdev/util/toaru-toolchain/bin:$PATH"
 }
 
 # CUSTOM TAB COMPLETIONS
