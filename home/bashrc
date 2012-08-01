@@ -71,6 +71,8 @@ fi
 # Fix gnome-terminal color support
 if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
+elif [ "$COLORTEMR" == "mate-terminal" ]; then
+	export TERM="xterm-256color"
 elif [ "$TERM" == "xterm" ]; then
 	# If shell reports just 'xterm', it may be PuTTY
 	if [ -e ~/bin/answerback ]; then
@@ -276,7 +278,7 @@ generate_password_rich () {
 }
 
 search () {
-	for i in `find`; do cat $i | grep $1 > /tmp/`whoami`-search; if [[ -s /tmp/`whoami`-search ]]; then echo -e "\033[1;32m$i\033[0m"; cat /tmp/`whoami`-search; fi; done 2>/dev/null
+	for i in `find`; do cat $i | grep -I $1 > /tmp/`whoami`-search; if [[ -s /tmp/`whoami`-search ]]; then echo -e "\033[1;32m$i\033[0m"; cat /tmp/`whoami`-search; fi; done 2>/dev/null
 }
 
 pecho () {
@@ -322,3 +324,5 @@ tc_generate_password () {
 }
 complete -F tc_generate_password generate_password
 complete -F tc_generate_password generate_password_rich
+
+alias :qall="echo \"This isn't vim :P\" && exit"
