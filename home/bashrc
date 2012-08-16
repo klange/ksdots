@@ -73,6 +73,9 @@ if [ "$COLORTERM" == "gnome-terminal" ]; then
 	export TERM="xterm-256color"
 elif [ "$COLORTERM" == "mate-terminal" ]; then
 	export TERM="xterm-256color"
+elif [ "$COLORTERM" == "Terminal" ]; then
+	# XFCE Terminal
+	export TERM="xterm-256color"
 elif [ "$TERM" == "xterm" ]; then
 	# If shell reports just 'xterm', it may be PuTTY
 	if [ -e ~/bin/answerback ]; then
