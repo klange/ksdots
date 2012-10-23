@@ -27,6 +27,9 @@ case $HOSTNAME in
 			KLANGE_USE_HG=false
 		fi
 		;;
+	*.yelpcorp.com)
+		KLANGE_USE_GIT=true
+		;;
 	*.acm.uiuc.edu|*.acm.illinois.edu)
 		KLANGE_USE_GIT=true
 		alias conkyForecast="python conkyForecast/conkyForecast.py"
