@@ -11,9 +11,13 @@ KLANGE_USE_HG=false
 
 if [[ "$(uname)" == "Darwin" || "$(uname)" == *CYGWIN* ]] ; then
 	HOSTNAME=`hostname`
+	alias ls="ls -G"
+	export PATH="/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
 else
 	HOSTNAME=`hostname --long`
 fi
+
+KLANGE_USE_GIT=true
 
 # HOST OPTIONS
 case $HOSTNAME in
