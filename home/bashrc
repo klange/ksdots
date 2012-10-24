@@ -151,13 +151,12 @@ function prompt_command {
 	if [ -e ~/bin/shorten_pwd ] ; then
 		CURRENT_PATH=`~/bin/shorten_pwd`
 	fi
-	# Screen window number
 	if [ "$WINDOW" != "" ] ; then
 		PROMPT_PREFIX="$PROMPT_PREFIX$PINK_COLOR%$WINDOW "
-	else
-		local DATE_STRING="$DATE_COLOR$DATE_STRING $TIME_COLOR$TIME_STRING "
-		PROMPT_PREFIX="$PROMPT_PREFIX$DATE_STRING"
 	fi
+	local DATE_STRING="$DATE_COLOR$DATE_STRING $TIME_COLOR$TIME_STRING "
+	PROMPT_PREFIX="$PROMPT_PREFIX$DATE_STRING"
+	# Screen window number
 	# Return code
 	if [[ $RETURN_CODE != 0 ]] ; then
 		PROMPT_PREFIX="$PROMPT_PREFIX$DATE_COLOR$RETURN_CODE$ASCII_RESET " # do nothing
