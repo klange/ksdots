@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git log --format='%aN' | sort -u | while read -r line 
+        do
+                git-contributions "${line}"
+        done
