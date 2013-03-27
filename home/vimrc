@@ -7,7 +7,7 @@ if has('multi_byte')      " Make sure we have unicode support
    scriptencoding utf-8    " This file is in UTF-8
 
    " ---- Terminal Setup ----
-   if (&termencoding == "" && (&term =~ "xterm" || &term =~ "putty")) || (&term =~ "rxvt-unicode") || (&term =~ "screen")
+   if (&termencoding == "" && (&term =~ "xterm" || &term =~ "putty")) || (&term =~ "rxvt-unicode") || (&term =~ "screen") || (&term =~ "toaru")
       set termencoding=utf-8
    endif
    if ($COLORTERM =~ "putty")
@@ -449,9 +449,6 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
-nnoremap <C-H> :Hexmode<CR>
-inoremap <C-H> <Esc>:Hexmode<CR>
-vnoremap <C-H> :<C-U>Hexmode<CR>
 
 highlight ColorColumn ctermbg=1
 highlight ColorColumn guibg=Red

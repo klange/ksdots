@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+	USER=`whoami`
+else
+	USER=$1
+fi
+
+if [ $# -lt 2 ]; then
+	BRANCH=$(git symbolic-ref -q HEAD)
+	BRANCH=${BRANCH##refs/heads/}
+	BRANCH=${BRANCH:-HEAD}
+else
+	BRANCH=$2
+fi
+
+printf "%s %s " "$BRANCH" "$USER"
+git log --author="$USER" --shortstat --pretty=format: "$BRANCH" | awk '/[0-9]+ insertions.+ [0-9]+ deletions/ { plus += $4; minus += $6; } END { printf "+%d -%d\n",plus,minus }'
