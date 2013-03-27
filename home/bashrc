@@ -128,7 +128,7 @@ if [ "$TERM" == "screen-bce" ]; then
 fi
 # PROMPT
 
-function prompt_command {
+function prompt_command_old {
 	# [user host MM/DD HH:MM /path/to/us]
 	# $ *
 	local RETURN_CODE="$?"
@@ -216,35 +216,92 @@ function prompt_command {
 		fi
 	fi
 	#
-	# SVN support
-	if [ $KLANGE_USE_SVN == true ]; then
-		if [ -e .svn ] ; then
-			local SVN_STATUS=`svn info 2>/dev/null`
-			if [[ $SVN_STATUS != "" ]] ; then
-				local REFS=" $(svn info | grep "Repository Root" | sed 's/.*\///')"
-				if [[ `svn status | sed 's/ .*//' | grep M` != "" ]] ; then
-					REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified
-				fi
-				PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}svn$USER_COLOR$REFS$ASCII_RESET "
-			fi
-		fi
-	fi
-	#
-	# Mercurial
-	if [ $KLANGE_USE_HG == true ]; then
-		if [ -e .hg ] ; then
-			local REFS=" $(hg branch 2>/dev/null)"
-			if [[ `hg status | sed 's/ .*//' | grep 'A'` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # modified
-			fi
-			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}hg$USER_COLOR$REFS$ASCII_RESET "
-		fi
-	fi
 	local FINAL_PATH="$ASCII_RESET$CURRENT_PATH"
 	PROMPT_PREFIX="$PROMPT_PREFIX$FINAL_PATH"
 	# And we're done
 	PS1="$TITLEBAR$ASCII_BOLD[$PROMPT_PREFIX$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
 }
+function prompt_command {
+	local RETURN_CODE="$?"
+
+	local   SOFT_YELLOW="\[\033[38;5;221m\]"
+	local   MEDIUM_GRAY="\[\033[38;5;59m\]"
+	local     SOFT_BLUE="\[\033[38;5;81m\]"
+	local    LIGHT_GRAY="\[\033[38;5;188m\]"
+	local    LIGHT_GOLD="\[\033[38;5;222m\]"
+	local MEDIUM_ORANGE="\[\033[38;5;173m\]"
+	local    MEDIUM_RED="\[\033[38;5;167m\]"
+	local  MEDIUM_GREEN="\[\033[38;5;47m\]"
+	local    BRIGHT_RED="\[\033[38;5;196m\]"
+	local  LIGHT_PURPLE="\[\033[38;5;177m\]"
+	local         RESET="\[\033[0m\]"
+	local          BOLD="\[\033[1m\]"
+
+	local ALIGN_LEFT="\033[1G"
+	local ALIGN_RIGHT="\033[400C"
+	local MAKE_SPACE="\033[16D"
+
+	local DATE_STRING="\$(date +%m/%d)"
+	local TIME_STRING="\$(date +%H:%M:%S)"
+
+	local CURRENT_PATH="\w"
+	if [ -e ~/bin/shorten_pwd ] ; then
+		CURRENT_PATH=`~/bin/shorten_pwd`
+	fi
+
+	local TITLEBAR=""
+	case $TERM in
+		xterm*|*rxvt*|cygwin|interix|Eterm|mlterm|kterm|aterm|putty*)
+			if [ "${STY}" ] ; then
+				 TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
+			else
+				TITLEBAR="\[\e]1;\u@\h:$CURRENT_PATH\007\e]2;\u@\h:$CURRENT_PATH\007\]"
+			fi
+		;;
+		toaru*)
+			TITLEBAR="\[\e]1;\u@\h:$CURRENT_PATH\007"
+		;;
+		screen*)
+			TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
+		;;
+	esac
+
+	local PROMPT_COLOR="$MEDIUM_GREEN"
+	if [[ ${EUID} == 0 ]] ; then
+		PROMPT_COLOR="$BRIGHT_RED"
+	fi
+
+	local PROMPT="$BOLD"
+	PROMPT="$PROMPT\[$ALIGN_RIGHT$MAKE_SPACE\]" # Ram the cursor to the right, then back 16 spaces
+	PROMPT="$PROMPT$MEDIUM_GRAY\[[\]$MEDIUM_ORANGE\[$DATE_STRING \]$MEDIUM_RED\[$TIME_STRING\]$MEDIUM_GRAY\[]\]"
+	PROMPT="$PROMPT\[$ALIGN_LEFT\]" # Reset the cursor to the left side
+	PROMPT="$PROMPT$SOFT_YELLOW\u$MEDIUM_GRAY@$SOFT_BLUE\h "
+
+	if [ $KLANGE_USE_GIT == true ]; then
+		local GIT_STATUS="$(git status 2>/dev/null)"
+		if [[ $GIT_STATUS != "" ]] ; then
+			local REFS="$(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')"
+			REFS="$LIGHT_GOLD${REFS#refs/heads/}"
+			if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
+				REFS="$REFS$LIGHT_PURPLE*" # Modified
+			elif [[ `echo $GIT_STATUS | grep "renamed:"` != "" ]] ; then
+				REFS="$REFS$LIGHT_PURPLE*" # Modified as well
+			fi
+			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
+				REFS="$REFS$SOFT_BLUE^" # Staged
+			fi 
+			PROMPT="$PROMPT$REFS "
+		fi
+	fi
+
+	if [[ $RETURN_CODE != 0 ]] ; then
+		PROMPT="$PROMPT$MEDIUM_RED$RETURN_CODE "
+	fi
+
+	PROMPT="$PROMPT$RESET$LIGHT_GRAY$CURRENT_PATH$BOLD$PROMPT_COLOR\\\$ $RESET"
+	PS1="$TITLEBAR$PROMPT"
+}
+
 export PROMPT_COMMAND=prompt_command
 
 # COLOR SUPPOORT
