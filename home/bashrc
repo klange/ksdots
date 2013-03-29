@@ -343,10 +343,6 @@ generate_password_rich () {
 	cat /dev/urandom| tr -dc '[:graph:]' | fold -w $1 | head -n 1
 }
 
-search () {
-	for i in `find`; do cat $i | grep -I $1 > /tmp/`whoami`-search; if [[ -s /tmp/`whoami`-search ]]; then echo -e "\033[1;32m$i\033[0m"; cat /tmp/`whoami`-search; fi; done 2>/dev/null
-}
-
 pecho () {
 	if [ "$1" == "" ]; then
 		echo 'Usage: pecho [window_number [window_number [...]]]'

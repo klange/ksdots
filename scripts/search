@@ -1,0 +1,3 @@
+#!/bin/bash
+export GREP_COLOR='1;38;5;228'
+find . -type f | xargs grep -n "$@" | awk -f ~/.formatfind.awk | grep "$@" --color=auto
