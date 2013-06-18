@@ -239,6 +239,8 @@ function prompt_command {
 	local  LIGHT_PURPLE="\[\033[38;5;177m\]"
 	local         RESET="\[\033[0m\]"
 	local          BOLD="\[\033[1m\]"
+	local          SAVE="\[\033[s\]"
+	local       RESTORE="\[\033[u\]"
 
 	local ALIGN_LEFT="\033[1G"
 	local ALIGN_RIGHT="\033[400C"
@@ -275,9 +277,9 @@ function prompt_command {
 	fi
 
 	local PROMPT="$BOLD"
-	PROMPT="$PROMPT\[$ALIGN_RIGHT$MAKE_SPACE\]" # Ram the cursor to the right, then back 16 spaces
+	PROMPT="$PROMPT$SAVE\[$ALIGN_RIGHT$MAKE_SPACE\]" # Ram the cursor to the right, then back 16 spaces
 	PROMPT="$PROMPT$MEDIUM_GRAY\[[\]$MEDIUM_ORANGE\[$DATE_STRING \]$MEDIUM_RED\[$TIME_STRING\]$MEDIUM_GRAY\[]\]"
-	PROMPT="$PROMPT\[$ALIGN_LEFT\]" # Reset the cursor to the left side
+	PROMPT="$PROMPT$RESTORE" # Reset the cursor to the left side
 	PROMPT="$PROMPT$SOFT_YELLOW\u$MEDIUM_GRAY@$SOFT_BLUE\h "
 
 	if [ $KLANGE_USE_GIT == true ]; then
