@@ -83,6 +83,8 @@ elif [ "$COLORTERM" == "mate-terminal" ]; then
 elif [ "$COLORTERM" == "Terminal" ]; then
 	# XFCE Terminal
 	export TERM="xterm-256color"
+elif [ "$FBTERM" == "1" ]; then
+	export TERM="fbterm"
 elif [ "$TERM" == "xterm" ]; then
 	# If shell reports just 'xterm', it may be PuTTY
 	if [ -e ~/bin/answerback ]; then
@@ -227,20 +229,39 @@ function prompt_command_old {
 function prompt_command {
 	local RETURN_CODE="$?"
 
-	local   SOFT_YELLOW="\[\033[38;5;221m\]"
-	local   MEDIUM_GRAY="\[\033[38;5;59m\]"
-	local     SOFT_BLUE="\[\033[38;5;81m\]"
-	local    LIGHT_GRAY="\[\033[38;5;188m\]"
-	local    LIGHT_GOLD="\[\033[38;5;222m\]"
-	local MEDIUM_ORANGE="\[\033[38;5;173m\]"
-	local    MEDIUM_RED="\[\033[38;5;167m\]"
-	local  MEDIUM_GREEN="\[\033[38;5;47m\]"
-	local    BRIGHT_RED="\[\033[38;5;196m\]"
-	local  LIGHT_PURPLE="\[\033[38;5;177m\]"
+	local COLOR_P="\033[38;5;"
+	local COLOR_A="m"
+	if [ "$TERM" == "fbterm" ] ; then
+		COLOR_P="\033[1;"
+		COLOR_A="}"
+	fi
+	local   SOFT_YELLOW="\[${COLOR_P}221$COLOR_A\]"
+	local   MEDIUM_GRAY="\[${COLOR_P}59$COLOR_A\]"
+	local     SOFT_BLUE="\[${COLOR_P}81$COLOR_A\]"
+	local    LIGHT_GRAY="\[${COLOR_P}188$COLOR_A\]"
+	local    LIGHT_GOLD="\[${COLOR_P}222$COLOR_A\]"
+	local MEDIUM_ORANGE="\[${COLOR_P}173$COLOR_A\]"
+	local    MEDIUM_RED="\[${COLOR_P}167$COLOR_A\]"
+	local  MEDIUM_GREEN="\[${COLOR_P}47$COLOR_A\]"
+	local    BRIGHT_RED="\[${COLOR_P}196$COLOR_A\]"
+	local  LIGHT_PURPLE="\[${COLOR_P}177$COLOR_A\]"
 	local         RESET="\[\033[0m\]"
 	local          BOLD="\[\033[1m\]"
 	local          SAVE="\[\033[s\]"
 	local       RESTORE="\[\033[u\]"
+
+	if [ "$TERM" == "linux" ] ; then
+		  SOFT_YELLOW="\[\033[1;33m\]"
+		  MEDIUM_GRAY="\[\033[1;30m\]"
+			SOFT_BLUE="\[\033[1;34m\]"
+		   LIGHT_GRAY="\[\033[1;30m\]"
+		   LIGHT_GOLD="\[\033[1;33m\]"
+		MEDIUM_ORANGE="\[\033[1;33m\]"
+		   MEDIUM_RED="\[\033[1;31m\]"
+		 MEDIUM_GREEN="\[\033[1;32m\]"
+		   BRIGHT_RED="\[\033[1;31m\]"
+		 LIGHT_PURPLE="\[\033[1;35m\]"
+	fi
 
 	local ALIGN_LEFT="\033[1G"
 	local ALIGN_RIGHT="\033[400C"
