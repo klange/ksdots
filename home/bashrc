@@ -352,6 +352,11 @@ alias rape='fsck -f'
 alias ll='ls -l'
 alias la='ls -la'
 
+# Extra aliases
+if [ -e ~/.bash_aliases ]; then
+	. ~/.bash_aliases
+fi
+
 # EDITOR
 
 export EDITOR=vim
