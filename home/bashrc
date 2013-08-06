@@ -83,6 +83,8 @@ elif [ "$COLORTERM" == "mate-terminal" ]; then
 elif [ "$COLORTERM" == "Terminal" ]; then
 	# XFCE Terminal
 	export TERM="xterm-256color"
+elif [ "$COLORTERM" == "xfce4-terminal" ]; then
+	export TERM="xterm-256color"
 elif [ "$FBTERM" == "1" ]; then
 	export TERM="fbterm"
 elif [ "$TERM" == "xterm" ]; then
@@ -349,6 +351,11 @@ alias なの="LANG=ja_JP.utf8 nano"
 alias rape='fsck -f'
 alias ll='ls -l'
 alias la='ls -la'
+
+# Extra aliases
+if [ -e ~/.bash_aliases ]; then
+	. ~/.bash_aliases
+fi
 
 # EDITOR
 
