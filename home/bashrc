@@ -267,8 +267,8 @@ function prompt_command {
 	local ALIGN_RIGHT="\033[400C"
 	local MAKE_SPACE="\033[16D"
 
-	local DATE_STRING="\$(date +%m/%d)"
-	local TIME_STRING="\$(date +%H:%M:%S)"
+	local DATE_STRING="\D{%m/%d}"
+	local TIME_STRING="\t"
 
 	local CURRENT_PATH="\w"
 	if [ -e ~/bin/shorten_pwd ] ; then
@@ -285,7 +285,7 @@ function prompt_command {
 			fi
 		;;
 		toaru*)
-			TITLEBAR="\[\e]1;\u@\h:$CURRENT_PATH\007"
+			TITLEBAR="\[\e]1;\u@\h:$CURRENT_PATH\007\]"
 		;;
 		screen*)
 			TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
