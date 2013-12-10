@@ -1,6 +1,8 @@
 /* XFT */
 Xft*dpi: 96
 Xft*antialias: true
+Xft*hintstyle: hintfull
+Xft*lcdfilter: lcdlegacy
 
 /* XTerm */
 XTerm*class: UXTerm
