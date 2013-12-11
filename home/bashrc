@@ -249,8 +249,8 @@ function prompt_command {
 	local  LIGHT_PURPLE="\[${COLOR_P}177$COLOR_A\]"
 	local         RESET="\[\033[0m\]"
 	local          BOLD="\[\033[1m\]"
-	local          SAVE=""
-	local       RESTORE="\r"
+	local          SAVE="\[\033[s\]"
+	local       RESTORE="\[\033[u\]"
 
 	if [ "$TERM" == "linux" ] ; then
 		  SOFT_YELLOW="\[\033[1;33m\]"
