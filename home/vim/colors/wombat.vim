@@ -1,6 +1,8 @@
 " This scheme was created by CSApproxSnapshot
 " on Sat, 17 Jan 2009
 
+set background=dark
+
 hi clear
 if exists("syntax_on")
     syntax reset
