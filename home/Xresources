@@ -9,7 +9,7 @@ XTerm*class: UXTerm
 XTerm*utf8: 1
 
 XTerm*faceSize: 9
-XTerm*faceName: Monospace
+XTerm*faceName: DejaVu Sans Mono
 
 XTerm*background: black
 XTerm*foreground: #CCCCCC
@@ -72,7 +72,7 @@ UXTerm*color15: #EEEEEC
 UXTerm*toolBar: false
 
 /* URxvt */
-URxvt*font: xft:Monospace-9
+URxvt*font: xft:DejaVu Sans-9
 
 URxvt*background: black
 URxvt*foreground: #CCCCCC
