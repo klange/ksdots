@@ -1,0 +1,4 @@
+# set theme
+theme=sunsmoke
+# enable git support
+git=1
