@@ -264,3 +264,4 @@ complete -F tc_generate_password generate_password_rich
 
 alias :qall="echo \"This isn't your editor :P\" && exit"
 
+export QUOTING_STYLE=literal
