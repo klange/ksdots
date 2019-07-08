@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import os, sys
-reload(sys)
-sys.setdefaultencoding("utf-8")
-path = os.getcwdu()
+if sys.version_info < (3, 0):
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    path = os.getcwdu()
+else:
+    path = os.getcwd()
 path = path.replace(os.environ["HOME"],"~")
 dirs = path.split("/");
 for i in range(len(dirs) - 1):
@@ -12,4 +15,4 @@ for i in range(len(dirs) - 1):
         dirs[i] = dirs[i][:2]
     else:
         dirs[i] = dirs[i][:1]
-print "/".join(dirs)
+print("/".join(dirs))
