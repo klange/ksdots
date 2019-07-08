@@ -4,10 +4,8 @@
 
 [ -z "$PS1" ] && return
 
-# DEFAULTS
-KLANGE_USE_GIT=false
-KLANGE_USE_SVN=false
-KLANGE_USE_HG=false
+# Default
+KLANGE_USE_GIT=true
 
 if [[ "$(uname)" == "Darwin" || "$(uname)" == *CYGWIN* ]] ; then
 	HOSTNAME=`hostname`
@@ -17,55 +15,17 @@ else
 	HOSTNAME=`hostname --long`
 fi
 
-KLANGE_USE_GIT=true
-
-# HOST OPTIONS
-case $HOSTNAME in
-	luka|kaito|miku|rin|len|piko)
-		KLANGE_USE_GIT=true
-		KLANGE_USE_SVN=true
-		KLANGE_USE_HG=true
-		if [[ "$(uname)" == *CYGWIN* ]] ; then
-			KLANGE_USE_GIT=false
-			KLANGE_USE_SVN=false
-			KLANGE_USE_HG=false
-		fi
-		;;
-	*.yelpcorp.com)
-		KLANGE_USE_GIT=true
-		;;
-	*.acm.uiuc.edu|*.acm.illinois.edu)
-		KLANGE_USE_GIT=true
-		alias conkyForecast="python conkyForecast/conkyForecast.py"
-		export PATH=/afs/acm.uiuc.edu/admin/scripts:$PATH
-		;;
-	*.ews.illinois.edu|*.ews.uiuc.edu)
-		KLANGE_USE_GIT=false
-		KLANGE_USE_SVN=true
-		alias cs232=/homesta/classdata/bin/cs232
-		alias sudo="echo This is an EWS workstation. You do not have 'sudo' here. #"
-		alias vim=vimx
-		;;
-	*.cs.illinois.edu|*.cs.uiuc.edu)
-		KLANGE_USE_GIT=true
-		KLANGE_USE_SVN=false
-		if [[ "x$HOME" == "x/home/$USER" ]] ; then
-			if [ -e /expand/home ] ; then
-				export HOME=/expand/home/$USER
-			fi
-		fi
-		;;
-esac
-
-KLANGE_EXPAND_GIT=false
+if [[ "$(uname)" == *CYGWIN* ]] ; then
+	# Disable on cygwin windows boxes
+	KLANGE_USE_GIT=false
+fi
 
 # ~/bin
 if [ -e ~/bin ]; then
 	export PATH=~/bin:$PATH
 fi
 
-# SPECIAL OPTIONS AND FIXES
-
+# History configuration
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 export HISTCONTROL=ignoreboth
 shopt -s histappend
@@ -133,101 +93,8 @@ if [ "$TERM" == "screen-bce" ]; then
 	# far more often than not, so give me 256-colors
 	export TERM=screen-256color
 fi
-# PROMPT
 
-function prompt_command_old {
-	# [user host MM/DD HH:MM /path/to/us]
-	# $ *
-	local RETURN_CODE="$?"
-	local ASCII_RESET="\[\e[0m\]"
-	local ASCII_BOLD="\[\e[1m\]"
-	local USER_COLOR="\[\e[1;33m\]"
-	local PROMPT_COLOR="\[\e[1;32m\]"
-	if [[ ${EUID} == 0 ]] ; then
-		PROMPT_COLOR="\[\e[1;31m\]"
-	fi
-	local HOST_COLOR="\[\e[1;32m\]"
-	local DATE_COLOR="\[\e[1;31m\]"
-	local TIME_COLOR="\[\e[1;34m\]"
-	local DATE_STRING="\$(date +%m/%d)"
-	local TIME_STRING="\$(date +%H:%M:%S)"
-	local CYAN_COLOR="\[\e[1;36m\]"
-	local PINK_COLOR="\[\e[1;35m\]"
-	# user and host
-	local PROMPT_PREFIX=""
-	local USER_HOST="$USER_COLOR\u $HOST_COLOR\h"
-	PROMPT_PREFIX="$PROMPT_PREFIX$USER_HOST "
-	# Paths
-	local CURRENT_PATH="\w"
-	if [ -e ~/bin/shorten_pwd ] ; then
-		CURRENT_PATH=`~/bin/shorten_pwd`
-	fi
-	if [ "$WINDOW" != "" ] ; then
-		PROMPT_PREFIX="$PROMPT_PREFIX$PINK_COLOR%$WINDOW "
-	fi
-	local DATE_STRING="$DATE_COLOR$DATE_STRING $TIME_COLOR$TIME_STRING "
-	PROMPT_PREFIX="$PROMPT_PREFIX$DATE_STRING"
-	# Screen window number
-	# Return code
-	if [[ $RETURN_CODE != 0 ]] ; then
-		PROMPT_PREFIX="$PROMPT_PREFIX$DATE_COLOR$RETURN_CODE$ASCII_RESET " # do nothing
-	fi
-	# Title bar
-	local TITLEBAR=""
-	case $TERM in
-		xterm*|*rxvt*|cygwin|interix|Eterm|mlterm|kterm|aterm|putty*)
-			if [ "${STY}" ] ; then
-				 TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
-			else
-				TITLEBAR="\[\e]1;\u@\h:$CURRENT_PATH\007\e]2;\u@\h:$CURRENT_PATH\007\]"
-			fi
-		;;
-		screen*)
-			TITLEBAR="\[\ek\u@\h:$CURRENT_PATH\e\134\]"
-		;;
-	esac
-	# Git support
-	if [ $KLANGE_USE_GIT == true ]; then
-		local GIT_STATUS="$(git status 2>/dev/null)"
-		if [[ $GIT_STATUS != "" ]] ; then
-			local REFS=" $(git symbolic-ref HEAD 2>/dev/null | sed 's/.*\///')"
-			REFS="${REFS#refs/heads/}"
-			if [[ `echo $GIT_STATUS | grep "modified:"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified
-				if [ $KLANGE_EXPAND_GIT == true ]; then
-					REFS="${REFS}odified"
-				fi
-			elif [[ `echo $GIT_STATUS | grep "renamed:"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${PINK_COLOR}m" # Modified as well
-				if [ $KLANGE_EXPAND_GIT == true ]; then
-					REFS="${REFS}odified"
-				fi
-			fi
-			if [[ `echo $GIT_STATUS | grep "ahead of"` != "" ]] ; then
-				REFS="$REFS$ASCII_RESET ${CYAN_COLOR}s" # Staged
-				if [ $KLANGE_EXPAND_GIT == true ]; then
-					REFS="${REFS}taged"
-				fi
-			fi 
-			if [ $KLANGE_EXPAND_GIT == true ]; then
-				local COMMIT=`git show | head -1 | sed 's/commit //'`
-				REFS="$REFS $TIME_COLOR[$ASCII_RESET$COMMIT$TIME_COLOR]"
-				if [[ `echo $GIT_STATUS | grep "Untracked"` != "" ]] ; then
-					REFS="$REFS$DATE_COLOR untracked files"
-				fi
-				if [[ `echo $GIT_STATUS | grep "new file"` != "" ]] ; then
-					REFS="$REFS$HOST_COLOR new files"
-				fi
-			fi
-			PROMPT_PREFIX="$PROMPT_PREFIX${HOST_COLOR}git$USER_COLOR$REFS$ASCII_RESET "
-		fi
-	fi
-	#
-	local FINAL_PATH="$ASCII_RESET$CURRENT_PATH"
-	PROMPT_PREFIX="$PROMPT_PREFIX$FINAL_PATH"
-	# And we're done
-	PS1="$TITLEBAR$ASCII_BOLD[$PROMPT_PREFIX$ASCII_BOLD]$ASCII_RESET\n$PROMPT_COLOR\\\$$ASCII_RESET "
-}
+# Prompt
 function prompt_command {
 	local RETURN_CODE="$?"
 
@@ -249,8 +116,8 @@ function prompt_command {
 	local  LIGHT_PURPLE="\[${COLOR_P}177$COLOR_A\]"
 	local         RESET="\[\033[0m\]"
 	local          BOLD="\[\033[1m\]"
-	local          SAVE="\[\033[s\]"
-	local       RESTORE="\[\033[u\]"
+	local          SAVE="\[\0337\]"
+	local       RESTORE="\[\0338\]"
 
 	if [ "$TERM" == "linux" ] ; then
 		  SOFT_YELLOW="\[\033[1;33m\]"
@@ -332,23 +199,18 @@ function prompt_command {
 
 export PROMPT_COMMAND=prompt_command
 
-# COLOR SUPPOORT
-
+# Standard Debian dircolors
 if [ -x /usr/bin/dircolors ]; then
 	eval "`dircolors -b`"
 	alias ls='ls --color=auto'
 fi
 
-# TAB COMPLETION
-
+# Isn't this the default?
 if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
 
-# ALIASES
-
-alias なの="LANG=ja_JP.utf8 nano"
-alias rape='fsck -f'
+# Common aliases to ls
 alias ll='ls -l'
 alias la='ls -la'
 
@@ -357,14 +219,12 @@ if [ -e ~/.bash_aliases ]; then
 	. ~/.bash_aliases
 fi
 
-# EDITOR
-
-export EDITOR=vim
+# Use bim for editor
+export EDITOR=bim
 
 gvim(){ setsid /usr/bin/gvim -f "$@"; }
 
-# FUNCTIONS
-
+# Some useful tools
 generate_password () {
 	cat /dev/urandom| tr -dc 'a-zA-Z0-9' | fold -w $1 | head -n 1
 }
@@ -373,6 +233,7 @@ generate_password_rich () {
 	cat /dev/urandom| tr -dc '[:graph:]' | fold -w $1 | head -n 1
 }
 
+# Write into multiple screen windows simulatneously
 pecho () {
 	if [ "$1" == "" ]; then
 		echo 'Usage: pecho [window_number [window_number [...]]]'
@@ -391,22 +252,6 @@ pecho () {
 	done
 }
 
-toaru-fix-path() {
-	export PATH="/home/klange/osdev/util/toaru-toolchain/bin:$PATH"
-}
-
-# CUSTOM TAB COMPLETIONS
-
-# Caffeine `caffeinate` Script -> netids (usernames)
-tc_caffeinate () {
-	local curw
-	COMPREPLY=()
-	curw=${COMP_WORDS[COMP_CWORD]}
-	COMPREPLY=($(compgen -A user -- $curw))
-	return 0
-}
-complete -F tc_caffeinate -o dirnames caffeinate
-
 tc_generate_password () {
 	local curw
 	COMPREPLY=()
@@ -417,4 +262,5 @@ tc_generate_password () {
 complete -F tc_generate_password generate_password
 complete -F tc_generate_password generate_password_rich
 
-alias :qall="echo \"This isn't vim :P\" && exit"
+alias :qall="echo \"This isn't your editor :P\" && exit"
+
