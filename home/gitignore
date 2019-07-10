@@ -1,6 +1,7 @@
 *.o
 cscope.*
 ctags
+*.dSYM
 .DS_Store
 *~
 tags
