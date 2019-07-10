@@ -11,6 +11,7 @@ if [[ "$(uname)" == "Darwin" || "$(uname)" == *CYGWIN* ]] ; then
 	HOSTNAME=`hostname`
 	alias ls="ls -G"
 	export PATH="/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
+	export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 else
 	HOSTNAME=`hostname --long`
 fi
