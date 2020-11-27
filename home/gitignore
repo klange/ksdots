@@ -15,3 +15,4 @@ tags
 *.dvi
 *.mode*v*
 .ant-targets-build.xml
+.gdb_history

@@ -1,4 +1,52 @@
-# set theme
-theme=sunsmoke
-# enable git support
-git=1
+rundir /home/klange/Projects/bim/themes
+
+# Last theme config is the preferred theme
+colorscheme ansi
+colorscheme sunsmoke256
+colorscheme sunsmoke
+
+# Enable git integration
+global.git 1
+
+# Enable statusbar (default)
+global.statusbar 1
+
+# Autohide tabs
+global.autohidetabs 1
+
+# Enable autocompletion
+smartcomplete 1
+
+function onload:bimcmd
+    spaces
+    tabstop 4
+end
+
+function onload:c
+    tabs
+    tabstop 4
+end
+
+function onload:*
+    maxcolumn 80
+end
+
+function onload:java
+    maxcolumn 128
+end
+
+function swapcss
+    mapkey norm ^A swaphtml
+    syntax css
+end
+
+function swaphtml
+    mapkey norm ^A swapcss
+    syntax xml
+end
+
+# Assume an XML file may be HTML and map ^A to swap between highlighters
+function onload:xml
+    mapkey norm ^A swapcss
+end
+
