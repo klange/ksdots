@@ -1,28 +1,52 @@
 #!/bin/bash
-echo -e "\e[1mInstalling (or updating) ksdots...\e[0m"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DRY=
 
-echo -e "\e[1;32mInstalling rc files...\e[0m"
-current_path=$(pwd)
-cd ~/
-for i in  $current_path/home/*; do
-	echo -n "Installing $i -> "
-	j=`echo $i | sed "s/.*home\//\./"`
-	echo "~/$j"
-	rm -r $j
-	echo "ln -f -s $i $j"
-	ln -f -s $i $j
-done
+log () {
+	echo -e "\e[1;32m$1\e[0m"
+}
 
-echo -e "\e[1;32mInstalling scripts...\e[0m"
-if [ ! -e ~/bin ] ; then
-	mkdir ~/bin
-fi
-cd ~/bin
-for i in $current_path/scripts/*; do
-	echo -n "Installing $i -> "
-	j=`echo $i | sed "s/.*scripts\///"`
-	echo "~/bin/$j"
-	rm -r $j
-	echo "ln -f -s $i $j"
-	ln -f -s $i $j
-done
+install_dir () {
+	# $1 source
+	# $2 target
+	# $3 prefix
+	log "Installing '$1' files to '$2'"
+	mkdir -p $2
+	pushd $2
+		for i in $DIR/$1/*; do
+			j=`echo $i | sed "s/.*$1\//$3/"`
+			echo "  Linking $i → $2/$j"
+			if [ -e "$j" ]; then
+				echo "   Removing existing $j"
+				$DRY rm -r $j
+			fi
+			$DRY ln -f -s $i $j
+		done
+	popd
+}
+
+install_project () {
+	# $1 thing to check $PATH for
+	# $2 group
+	# $3 project
+
+	log "Checking for a $1..."
+	if [ -z "$(which $1)" ]; then
+		echo "  Building a $1..."
+		mkdir -p ~/Projects
+		pushd ~/Projects
+			git clone git@github.com:$2/$3
+			pushd $3
+				make
+				sudo make install
+			popd
+		popd
+	fi
+	$1 --version
+}
+
+install_dir "home" ~ "."
+install_dir "scripts" ~/bin ""
+install_project "kuroko" "kuroko-lang" "kuroko"
+install_project "bim" "klange" "bim"
+
